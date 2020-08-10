@@ -1,7 +1,7 @@
 #from __future__ import absolute_import, division, print_function
 
 print('__file__={0:<35} | __name__={1:<25} | __package__={2:<25}'.format(__file__,__name__,str(__package__)))
-from exception import IndexOutOfBoundsException
+from .exception import IndexOutOfBoundsException
 
 import ctypes
 
@@ -13,7 +13,6 @@ import ctypes
 # 3) we can use static array to store all elements of dynamic array before increasing the size
 # dynamic array, for add/remove methods.
 # 4) define set, get, append, size, clear methods for dynamic array
-# 5) 
 # uses ctypes (for arrays)
 
 class DynamicArray(object):

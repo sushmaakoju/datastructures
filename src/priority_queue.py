@@ -1,9 +1,10 @@
-from exception import EmptyListException
-from treeset import TreeSet
+from .exception import EmptyListException
+from .treeset import TreeSet
 import math
 
 class PriorityQueue():
-
+    """Priority Queue using heap
+    """
     def __init__(self, size=None, elements=None):
         if size != None:
             self.heapsize = size

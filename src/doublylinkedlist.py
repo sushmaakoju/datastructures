@@ -1,5 +1,5 @@
 #from __future__ import absolute_import, division, print_function
-from exception import IndexOutOfBoundsException
+from .exception import IndexOutOfBoundsException
 
 #Consists of nodes.
 # 1) define node with previous, next and data parameters
@@ -288,3 +288,11 @@ class DoublyLinkedList():
                 data_str += ","
             trav = trav.next
         return data_str
+    
+    def __len__(self):
+        """Get current size of the Doubly linked list
+
+        Returns:
+            length: current size of list
+        """
+        return self.size

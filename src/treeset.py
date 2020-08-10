@@ -1,4 +1,4 @@
-from exception import Error
+from .exception import Error
 import bisect
 # use bisect to sort to right
 # add ceiling and floor 
