@@ -13,7 +13,7 @@ from .exception import Error
 #   3) update the weights - add sz[root 1] to sz[ root 2]  
 # summary - merge with set to the one that has larger 'weights' to 'balance' the trees
 #6) Adding path compression in find, reduces complexity i.e.
-#amortized complexity O(1) for find, union and connected.
+# (inverse Ackermann function ) amortized complexity O(1) for find, union and connected.
 # - This involves a) get root of the element 2) 'flatten' the path until traversed until the root
 #   flattening - for a given p and its root, update id[p] to root and repeat until 
 #   traversed all the way to root
