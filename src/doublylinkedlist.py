@@ -186,7 +186,8 @@ class DoublyLinkedList():
             raise RuntimeError('Empty list')
         data = self.tail.data
         tail = self.tail.prev
-        self.tail.prev.next = None
+        if self.tail.prev != None:
+            self.tail.prev.next = None
         self.tail = tail
 
         self.size -= 1

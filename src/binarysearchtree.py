@@ -19,6 +19,7 @@ from .utils import *
 #   we can also use find_max to handle case d) i.e. find rightmost node in left subtree. 
 # Tree traversal : 1) preorder (print node.data before traversing to subtrees) 2) inorder (print during the traversal) and postorder (print data after traversal).
 # use queues/stacks to pop and push traversed nodes/root nodes
+# avg case: O(log(n)) and worst case O(n)
 class Node():
     def __init__(self, left, right, element):
         self.left = left
@@ -29,7 +30,7 @@ class TreeTraversalOrder(Enum):
     INORDER = 2
     POSTORDER = 3
     LEVELORDER = 4
-
+    
 class BinarySearchTree():
     """Binary Search Tree: is a binary tree with Binary Search Invariant 
        such that left tree elements are smaller and right tree elements are larger.
@@ -39,6 +40,9 @@ class BinarySearchTree():
         self.node_count = 0
         if element != None:
             self.insert(element)
+        self.stack = Stack(None)
+        self.index = -1
+        self.sorted = []
     
     def size(self):
         return self.node_count
@@ -214,18 +218,14 @@ class BinarySearchTree():
         Returns:
             comparable: data of node traversed
         """
-        stack = Stack()
-        stack.push(node.data)
+        if node == None:
+            return
         expected_count = self.node_count
-        node = stack.pop()
-        print(node.data)
+        self.sorted.append(node.data)
         if node.left != None:
-            stack.push(node.left.data)
             self.preorder_traversal(node.left)
         if node.right != None:
-            stack.push(node.right.data)
             self.preorder_traversal(node.right)
-        return node.data
     
     def inorder_traversal(self, node):
         """Traverse through Binary search tree using stack and inorder
@@ -236,18 +236,14 @@ class BinarySearchTree():
         Returns:
             comparable: data of node traversed
         """
-        stack = Stack()
-        stack.push(node)
+        if node == None:
+            return
         expected_count = self.node_count
         if node.left != None:
-            stack.push(node.left.data)
             self.inorder_traversal(node.left)
-        print(node.data)
-        node = stack.pop()
+        self.sorted.append(node.data)
         if node.right != None:
-            stack.push(node.right.data)
             self.inorder_traversal(node.right)
-        return node.data
 
     def postorder_traversal(self, node):
         """Traverse through Binary search tree using stack and postorder
@@ -258,19 +254,15 @@ class BinarySearchTree():
         Returns:
             comparable: data of node traversed
         """
-        stack = Stack()
-        stack.push(node)
+        if node == None:
+            return
         expected_count = self.node_count
         if node.left != None:
-            stack.push(node.left.data)
             self.postorder_traversal(node.left)
         if node.right != None:
-            stack.push(node.right.data)
             self.postorder_traversal(node.right)
-        print(node.data)
-        node = stack.pop()
-        return node.data
-    
+        self.sorted.append(node.data)
+
     def levelorder_traversal(self, node):
         """Level order traversal of the Binary search tree. Uses Breadth first search approach.
 
@@ -280,15 +272,16 @@ class BinarySearchTree():
         Returns:
             comparable: data of node
         """
-        queue = Queue(node.data)
-        print(queue.to_string())
-        queue.poll()
+        level_list = ''
+        level_list += str(node.data) + ','
         if node.left != None:
-            queue.offer(node.left)
+            level_list += str(node.left.data)
             self.levelorder_traversal(node.left)
         if node.right != None:
-            queue.offer(node.right)
+            level_list += str(node.right.data)
             self.levelorder_traversal(node.right)
+        if not level_list == '':
+            self.sorted.append(level_list)
         return node.data
     
     def traverse(self, tree_traversal_order=TreeTraversalOrder.INORDER):
@@ -300,14 +293,21 @@ class BinarySearchTree():
             Select from TreeTraversalOrder.PREORDER,TreeTraversalOrder.POSTORDER,
             TreeTraversalOrder.LEVELORDER, TreeTraversalOrder.INORDER.
         """
+        #reset
+        self.sorted = []
+        self.index = -1
+
+        #and traverses
         if tree_traversal_order == TreeTraversalOrder.INORDER:
-            self.inorder_traversal(self.root)
-        if tree_traversal_order == TreeTraversalOrder.PREORDER:
-            self.preorder_traversal(self.root)
-        if tree_traversal_order == TreeTraversalOrder.POSTORDER:
-            self.postorder_traversal(self.root)
-        if tree_traversal_order == TreeTraversalOrder.LEVELORDER:
-            self.levelorder_traversal(self.root)
+            return self.inorder_traversal(self.root)
+        elif tree_traversal_order == TreeTraversalOrder.PREORDER:
+            return self.preorder_traversal(self.root)
+        elif tree_traversal_order == TreeTraversalOrder.POSTORDER:
+            return self.postorder_traversal(self.root)
+        elif tree_traversal_order == TreeTraversalOrder.LEVELORDER:
+            return self.levelorder_traversal(self.root)
+        else:
+            return None
             
 
     def height(self):
@@ -322,6 +322,14 @@ class BinarySearchTree():
         if node == None:
             return 0
         return max(self.__height__(node.left), self.__height__(node.right)) + 1
+    
+    def has_next(self):
+        return (self.index +1) < len(self.sorted)
+    
+    #return smallest from stack
+    def next(self):
+        self.index += 1
+        return self.sorted[self.index]
 
 
 

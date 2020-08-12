@@ -12,6 +12,7 @@ from src.linked_queue import Queue
 from src.treeset import TreeSet
 from src.priority_queue import PriorityQueue
 from src.unionfind import UnionFind
+from src.binarysearchtree import BinarySearchTree, TreeTraversalOrder
 import unittest
 
 import time
@@ -122,6 +123,7 @@ class TestDataStructures(unittest.TestCase):
 
 
     def test_unionfind(self):
+        print("UnionFind")
         uf = UnionFind(5)
         self.assertEqual(uf.components(), 5)
         uf.unify(0,1)
@@ -143,3 +145,76 @@ class TestDataStructures(unittest.TestCase):
         uf.unify(4,0)
         self.assertEqual(uf.components(), 1)
 
+ 
+
+    def test_binary_search_tree(self):
+        print("BinarySearchTree")
+        #test height
+        bst = BinarySearchTree(None)
+        self.assertEqual(bst.height(), 0)
+        #test insert
+        self.assertTrue(bst.insert("M"))
+        self.assertEqual(bst.height(), 1)
+        #layer 2
+        bst.insert("J")
+        self.assertEqual(bst.height(), 2)
+        bst.insert("S")
+        self.assertEqual(bst.height(), 2)
+
+        #layer 3
+        bst.insert("B")
+        self.assertEqual(bst.height(), 3)
+        bst.insert("N")
+        self.assertEqual(bst.height(), 3)
+        bst.insert("Z")
+        self.assertEqual(bst.height(), 3)
+    
+        #layer 4
+        bst.insert("A")
+        self.assertEqual(bst.height(), 4)
+
+        # test contains
+        self.assertTrue(bst.contains("Z"))
+
+        # test traversals
+        bst.traverse(TreeTraversalOrder.INORDER)
+        expected = ['A', 'B', 'J', 'M', 'N', 'S', 'Z']
+        i = -1
+        while bst.has_next():
+            i += 1
+            self.assertEqual(bst.next(), expected[i])
+            
+        bst.traverse(TreeTraversalOrder.PREORDER)
+        expected = ['M', 'J', 'B', 'A', 'S', 'N', 'Z']
+        i = -1
+        while bst.has_next():
+            i += 1
+            self.assertEqual(bst.next(), expected[i])
+
+        bst.traverse(TreeTraversalOrder.POSTORDER)
+        expected = ['A', 'B', 'J', 'N', 'Z', 'S', 'M']
+        i = -1
+        while bst.has_next():
+            i += 1
+            self.assertEqual(bst.next(), expected[i])
+
+        bst.traverse(TreeTraversalOrder.LEVELORDER)
+        expected = ['A,', 'B,A', 'J,B', 'N,', 'Z,', 'S,NZ', 'M,JS']
+        i = -1
+        while bst.has_next():
+            i += 1
+            self.assertEqual(bst.next(), expected[i])
+
+        bst = BinarySearchTree(None)
+        bst.insert("A")
+        self.assertEqual(bst.height(), 1)
+        #test remove
+        bst.insert("B")
+        self.assertEqual(bst.size(), 2)
+        self.assertTrue(bst.remove("B"))
+        self.assertEqual(bst.height(), 1)
+        self.assertEqual(bst.size(), 1)
+        self.assertTrue(bst.remove("A"))
+        self.assertEqual(bst.height(), 0)
+        self.assertEqual(bst.size(), 0)
+        

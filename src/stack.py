@@ -5,7 +5,8 @@ class Stack(DoublyLinkedList):
 
     def __init__(self, data):
         super().__init__(data)
-        self.push(data)
+        if data != None:
+            self.push(data)
         
     #o(1)
     def pop(self):
@@ -55,12 +56,4 @@ class Stack(DoublyLinkedList):
             raise EmptyStackException()
         return self.peek_first()
     
-    def __iter__(self):
-        return self
-    
-    def next(self):
-        if self.size > 0:
-            return self.pop()
-        else:
-            raise Exception
     
