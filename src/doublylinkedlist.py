@@ -128,7 +128,7 @@ class DoublyLinkedList():
         """Peeks to the head node
 
         Raises:
-            RuntimeError: Check if list is empty
+            RuntimeError: if list is empty
 
         Returns:
             data: Returns data of the first node

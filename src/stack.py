@@ -55,3 +55,12 @@ class Stack(DoublyLinkedList):
             raise EmptyStackException()
         return self.peek_first()
     
+    def __iter__(self):
+        return self
+    
+    def next(self):
+        if self.size > 0:
+            return self.pop()
+        else:
+            raise Exception
+    
