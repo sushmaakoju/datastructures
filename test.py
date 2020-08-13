@@ -13,6 +13,8 @@ from src.treeset import TreeSet
 from src.priority_queue import PriorityQueue
 from src.unionfind import UnionFind
 from src.binarysearchtree import BinarySearchTree, TreeTraversalOrder
+from src.hashtable import HashTable
+from src.hashtable_chaining import ChainedHashTable
 import unittest
 
 import time
@@ -41,7 +43,7 @@ class TestDataStructures(unittest.TestCase):
 
     def test_doubly_linked(self):
         print("Doubly Linked List")
-        dl = DoublyLinkedList(1)
+        dl = DoublyLinkedList(1, 0)
         dl.add(2)
         dl.add(3)
         dl.add("fourth")
@@ -59,10 +61,12 @@ class TestDataStructures(unittest.TestCase):
         dl.remove_first()
         self.assertEqual(len(dl), 4)
         print(dl.to_string())
+        for d in dl:
+            print(d)
 
     def test_stack(self):
         print("Stack")
-        stack =  Stack(1)
+        stack =  Stack(1, 0)
         stack.push(2)
         stack.push(3)
         self.assertEqual(len(stack), 3)
@@ -74,7 +78,7 @@ class TestDataStructures(unittest.TestCase):
 
     def test_queues(self):
         print("Queue")
-        queue = Queue(4)
+        queue = Queue(4, 0)
         queue.offer(2)
         self.assertEqual(len(queue), 2)
         print(queue.to_string())
@@ -217,4 +221,23 @@ class TestDataStructures(unittest.TestCase):
         self.assertTrue(bst.remove("A"))
         self.assertEqual(bst.height(), 0)
         self.assertEqual(bst.size(), 0)
+
+    def test_hashtable(self):
+        print("HashTable")
+        hashtable = HashTable(key=1,value=2,size=10)
+        hashtable.add(2,2)
+        self.assertTrue(hashtable.has_key(2))
+        self.assertEqual(hashtable.get(2), 2)
+    
+
+    def test_chained_hashtable(self):
+        print("ChainedHashTable")
+        hashtable = ChainedHashTable(capacity=10)
+        hashtable.add(1,2)
+        hashtable.add(2,2)
+        self.assertTrue(hashtable.has_key(2))
+        self.assertEqual(hashtable.get(2), [2])
+        hashtable.add(2,3)
+        self.assertTrue(hashtable.has_key(2))
+        self.assertEqual(hashtable.get(2), 2)
         
