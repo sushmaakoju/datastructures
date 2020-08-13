@@ -3,8 +3,8 @@ from .exception import EmptyStackException
 
 class Stack(DoublyLinkedList):
 
-    def __init__(self, data):
-        super().__init__(data)
+    def __init__(self, data, size):
+        super().__init__(data, size)
         if data != None:
             self.push(data)
         

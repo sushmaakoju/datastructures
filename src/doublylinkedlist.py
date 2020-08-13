@@ -30,10 +30,10 @@ class DoublyLinkedList():
     This is a Doubly linked list
     '''
     
-    def __init__(self, data):
+    def __init__(self, data, size):
         """Initialize this node with data
         """
-        self.size = 0
+        self.size = size
         self.head = Node(data, None, None)
         self.tail = Node(data, None, None)
     
@@ -64,6 +64,28 @@ class DoublyLinkedList():
             bool: returns true if list is empty
         """
         return self.size == 0
+    
+    def __iter__(self):
+        if self.size == 0:
+            return
+        trav = self.head
+        while trav:
+            yield trav.data
+            trav = trav.next
+        
+    def __reversed__(self):
+        if self.size == 0:
+            return
+        trav = self.head
+        while trav:
+            yield trav.data
+            trav = trav.prev
+
+    def find(self, element):
+        trav = self.head
+        while trav and trav.data != element:
+            trav = trav.next
+        return trav
     
     def add(self, element):
         """Add an element to Double linked list. Adds at end of list.
@@ -258,7 +280,7 @@ class DoublyLinkedList():
 
     #o(n)
     def index_of(self, obj):
-        """Gte index of data
+        """Get index of data
 
         Args:
             obj : the data paramter of the node
@@ -297,3 +319,17 @@ class DoublyLinkedList():
             length: current size of list
         """
         return self.size
+    
+class LinkedListIterator(object):
+    def __init__(self, node):
+        self.trav = node
+    
+    def __iter__(self):
+        return self
+    
+    def next(self):
+        if self.trav == None:
+            raise StopIteration()
+        result = self.trav.data
+        self.trav = self.trav.next
+        return result
