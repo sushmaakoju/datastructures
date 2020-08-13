@@ -40,7 +40,7 @@ class BinarySearchTree():
         self.node_count = 0
         if element != None:
             self.insert(element)
-        self.stack = Stack(None)
+        self.stack = Stack(None, 0)
         self.index = -1
         self.sorted = []
     

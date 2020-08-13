@@ -3,8 +3,8 @@ from .exception import EmptyListException
 
 class Queue(DoublyLinkedList):
 
-    def __init__(self, element):
-        super().__init__(element)
+    def __init__(self, element, size):
+        super().__init__(element, size)
         self.offer(element)
 
     #o(1)
