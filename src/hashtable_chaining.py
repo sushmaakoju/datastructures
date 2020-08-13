@@ -7,9 +7,9 @@ from .doublylinkedlist import DoublyLinkedList
 # Entry class is used to maintain key, value pair.
 # each entry in hashtable is a doublelinkedlist with data of type Entry(K,V).
 # Each of the doublylinkedlist can contain multiple entries for same "key".
-# maintain a resize_table method to resize HashTable since initial capacity of HashTable is of the capacity.
-# to maintain O(1) inserts, lookups, removals - resize the table if size of table > threshold
-# everytime find an entry by looking up key and if entry already exists, then update and insert in bucket
+# maintain a resize_table method since initial capacity of HashTable fixed and must grow, 
+# if it needs to preserve O(1) for inserts, lookups, removals - resize the table if size of table > threshold
+# For every insert: find an entry by looking up key and if entry already exists, then update and insert in bucket
 # and if entry does not already exist, add entry to bucket and update the HashTable with updated bucket.
 
 class Key():
@@ -83,8 +83,9 @@ class ChainedHashTable():
         self.capacity = 0
 
     def resize_table(self):
-        """Resize the Hashtable to preserve the time complexity of all the operations i.e. O(1).
-           Hashtable grows in capacity. Default is capacity of 3 unless not specified during creation.
+        """Resize the Hashtable to preserve the time complexity for all the operations i.e. O(1).
+           Hashtable grows in capacity. Default capacity is 3 unless not 
+           explicitly specified during creation.
         """
         self.capacity *= 2
         self.threshold = self.capacity * self.max_load_factor
