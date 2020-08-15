@@ -15,6 +15,8 @@ from src.unionfind import UnionFind
 from src.binarysearchtree import BinarySearchTree, TreeTraversalOrder
 from src.hashtable import HashTable
 from src.hashtable_chaining import ChainedHashTable
+from src.fenwicktree import FenwickTree
+from src.bitoperations import *
 import unittest
 
 import time
@@ -239,5 +241,29 @@ class TestDataStructures(unittest.TestCase):
         self.assertEqual(hashtable.get(2), [2])
         hashtable.add(2,3)
         self.assertTrue(hashtable.has_key(2))
-        self.assertEqual(hashtable.get(2), 2)
+        self.assertEqual(hashtable.get(2), [2,3])
+    
+
+    def test_fenwick_tree(self):
+        print("Fenwick Tree")
+        ft = FenwickTree([1,2,2,4])
+        self.assertEqual(ft.sum(1,4), 9)
+        ft.point_update(3,1)
+        self.assertEqual(ft.sum(1,4), 10)
+        ft.set(4,0)
+        self.assertEqual(ft.sum(1,4), 6)
+        ft.get(2)
+        ft = FenwickTree([-2,0,3,-5, 2, -1])
+        self.assertEqual(ft.sum(1,3), 1)
+        print(ft.tree)
+        ft = FenwickTree([1,3,5])
+        self.assertEqual(ft.sum(1,3), 9)
+        print(ft.tree)
+        ft.set(2,2)
+        print(ft.tree)
+        self.assertEqual(ft.sum(1,3), 8)
         
+
+    
+    def test_bitoperators(self):
+        self.assertEqual(least_significan_bit(5), 1)
