@@ -326,6 +326,19 @@ class BinarySearchTree():
     def has_next(self):
         return (self.index +1) < len(self.sorted)
     
+    def count_nodes(self, root):
+        """Count # of nodes in a Binary tree (Binary search tree)
+
+        Args:
+            root ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
+        if root != None:
+            return self.countNodes(root.left) + self.countNodes(root.right) + 1
+        return 0
+    
     #return smallest from stack
     def next(self):
         self.index += 1

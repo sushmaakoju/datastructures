@@ -17,6 +17,8 @@ from src.hashtable import HashTable
 from src.hashtable_chaining import ChainedHashTable
 from src.fenwicktree import FenwickTree
 from src.bitoperations import *
+from src.binarytree import BinaryTree
+from src.set import Set
 import unittest
 
 import time
@@ -61,7 +63,8 @@ class TestDataStructures(unittest.TestCase):
         self.assertEqual(len(dl), 5)
         print(dl.to_string())
         dl.remove_first()
-        self.assertEqual(len(dl), 4)
+        dl.remove("fifth")
+        self.assertEqual(len(dl), 3)
         print(dl.to_string())
         for d in dl:
             print(d)
@@ -223,6 +226,12 @@ class TestDataStructures(unittest.TestCase):
         self.assertTrue(bst.remove("A"))
         self.assertEqual(bst.height(), 0)
         self.assertEqual(bst.size(), 0)
+        bst = BinarySearchTree(None)
+        bst.insert(1)
+        bst.insert(2)
+        bst.insert(3)
+        bst.insert(5)
+
 
     def test_hashtable(self):
         print("HashTable")
@@ -242,6 +251,8 @@ class TestDataStructures(unittest.TestCase):
         hashtable.add(2,3)
         self.assertTrue(hashtable.has_key(2))
         self.assertEqual(hashtable.get(2), [2,3])
+        hashtable.remove(1)
+        self.assertFalse(hashtable.has_key(1))
     
 
     def test_fenwick_tree(self):
@@ -267,3 +278,54 @@ class TestDataStructures(unittest.TestCase):
     
     def test_bitoperators(self):
         self.assertEqual(least_significan_bit(5), 1)
+    
+    def test_binary_tree(self):
+        print("BinaryTree")
+        #test height
+        bst = BinaryTree()
+        self.assertEqual(bst.height(), 0)
+        #test insert
+        bst.insert_left("M")
+        self.assertEqual(bst.height(), 1)
+        #layer 2
+        bst.insert_left("J")
+        self.assertEqual(bst.height(), 2)
+        bst.insert_right("S")
+        self.assertEqual(bst.height(), 2)
+
+        #layer 3
+        bst.insert_right("B")
+        self.assertEqual(bst.height(), 3)
+        bst.insert_left("N")
+        self.assertEqual(bst.height(), 3)
+        bst.insert_left("Z")
+        self.assertEqual(bst.height(), 4)
+    
+        # test contains
+        self.assertTrue(bst.find("Z"))
+            
+        expected = ['M', 'J', 'B', 'S', 'N', 'Z']
+        for v in bst:
+            self.assertTrue(v in expected)
+
+        bst = BinaryTree()
+        bst.insert_left("A")
+        self.assertEqual(bst.height(), 1)
+        #test remove
+        bst.insert_left("B")
+        self.assertEqual(bst.size, 2)
+        bst = BinaryTree()
+        bst.insert_left(1)
+        bst.insert_left(2)
+        bst.insert_right(3)
+        bst.insert_right(5)
+
+    def test_sets(self):
+        s = Set()
+        s.put(1)
+        s.put(3)
+        s.put(0)
+        s.put(5)
+        self.assertEquals(len(s), 4)
+        s.remove(1)
+        self.assertEquals(len(s), 3)

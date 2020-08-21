@@ -215,8 +215,13 @@ class DoublyLinkedList():
         self.size -= 1
         return data
 
+    def remove(self, element):
+        node = self.find(element)
+        if node != None:
+            self.__remove__(node)
+
     #o(1)
-    def remove(self, node):
+    def __remove__(self, node):
         """Remove a node
 
         Args:
@@ -226,9 +231,9 @@ class DoublyLinkedList():
             data: Data of the removed node
         """
         if node.prev == None:
-            self.remove_first()
-        if node.next == None:
-            self.remove_last()
+            return self.remove_first()
+        elif node.next == None:
+            return self.remove_last()
         
         node.next.prev = node.prev
         node.prev.next = node.next
@@ -276,7 +281,7 @@ class DoublyLinkedList():
                 i -= 1
                 if i == index-1:
                     break 
-        return self.remove(trav)
+        return self.__remove__(trav)
 
     #o(n)
     def index_of(self, obj):

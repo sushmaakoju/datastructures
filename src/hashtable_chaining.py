@@ -193,15 +193,16 @@ class ChainedHashTable():
         """Remove a key from HashTable
 
         Args:
-            key (Key): type Key with [key, hash]
+            key (int): type Key with [key, hash]
 
         Returns:
             value: returns value of entry removed from each bucket
         """
         if key == None:
             return None
-        bucket_index = self.normalize_hash(key.hash)
-        return self.bucket_remove_enrty(bucket_index, key)
+        k = Key(key)
+        bucket_index = self.normalize_hash(k.hash)
+        return self.bucket_remove_enrty(bucket_index, k)
 
     def bucket_remove_enrty(self, index, key):
         """Remove a key and also delete the corresponding bucket
@@ -213,7 +214,7 @@ class ChainedHashTable():
         Returns:
             value: returns value if the key was successfully removed
         """
-        entry = self.bucket_seek_enrty(self, index, key)
+        entry = self.bucket_seek_enrty(index, key)
         if entry != None:
             linkedlist = self.table[index]
             linkedlist.remove(entry)
@@ -232,7 +233,7 @@ class ChainedHashTable():
         for bucket in self.table:
             if bucket != None:
                 for entry in bucket:
-                    keys.add(entry.key)
+                    keys.append(entry.key)
         return keys
     
     def values(self):
